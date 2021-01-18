@@ -1,6 +1,7 @@
 package com.bentley.githubuser.di
 
 import android.content.Context
+import com.bentley.githubuser.App
 import com.bentley.githubuser.data.remote.api.ApiService
 import com.bentley.githubuser.data.remote.util.AuthInterceptor
 import com.bentley.githubuser.utils.NetworkCheck
@@ -72,5 +73,11 @@ object RetrofitModule {
     @Provides
     fun provideNetworkCheck(@ApplicationContext context: Context): NetworkCheck {
         return NetworkCheck(context)
+    }
+
+    @Singleton
+    @Provides
+    fun provideContext(): Context {
+        return App.globalApplicationContext
     }
 }

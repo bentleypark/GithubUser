@@ -10,7 +10,7 @@ interface ApiService {
         const val BASE_URL = "https://api.github.com/"
     }
 
-    @GET("location/search/users")
+    @GET("search/users")
     suspend fun searchUsers(
         @Query("q") searchKeyword: String,
         @Query("page") page: Int,

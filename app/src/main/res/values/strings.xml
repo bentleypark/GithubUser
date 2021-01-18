@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Github Starts</string>
+    <string name="app_name">Github Stars</string>
     <string name="tab_text_1">API</string>
     <string name="tab_text_2">Local</string>
 </resources>
