@@ -1,4 +1,4 @@
-package com.bentley.githubuser.data.util
+package com.bentley.githubuser.data.remote.util
 
 import com.bentley.githubuser.utils.NetworkCheck
 import okhttp3.Interceptor

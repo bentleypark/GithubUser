@@ -77,6 +77,11 @@ object Libs {
     // StartUp
     const val startUp = "androidx.startup:startup-runtime:${Versions.startupVersion}"
 
+    // Room
+    const val roomRuntime = "androidx.room:room-runtime:${Versions.roomVersion}"
+    const val roomCompiler = "androidx.room:room-compiler:${Versions.roomVersion}"
+    const val roomKtx = "androidx.room:room-ktx:${Versions.roomVersion}"
+
     // Google
     const val material = "com.google.android.material:material:${Versions.materialVersion}"
     const val gson = "com.google.code.gson:gson:${Versions.gsonVersion}"

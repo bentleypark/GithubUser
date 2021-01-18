@@ -1,4 +1,4 @@
-package com.bentley.githubuser.data.entity
+package com.bentley.githubuser.data.remote.entity
 
 import com.google.gson.annotations.SerializedName
 

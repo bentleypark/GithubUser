@@ -1,8 +1,8 @@
 package com.bentley.githubuser.di
 
 import android.content.Context
-import com.bentley.githubuser.data.api.ApiService
-import com.bentley.githubuser.data.util.AuthInterceptor
+import com.bentley.githubuser.data.remote.api.ApiService
+import com.bentley.githubuser.data.remote.util.AuthInterceptor
 import com.bentley.githubuser.utils.NetworkCheck
 import dagger.Module
 import dagger.Provides

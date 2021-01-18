@@ -2,8 +2,9 @@ package com.bentley.githubuser.di
 
 import com.bentley.githubuser.data.GithubUserRepository
 import com.bentley.githubuser.data.GithubUserRepositoryImpl
-import com.bentley.githubuser.data.api.ApiService
-import com.bentley.githubuser.data.mapper.UserMapper
+import com.bentley.githubuser.data.local.GithubUserDao
+import com.bentley.githubuser.data.remote.api.ApiService
+import com.bentley.githubuser.data.remote.mapper.UserMapper
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -19,8 +20,9 @@ object RepositoryModule {
     fun provideMainRepository(
         apiService: ApiService,
         userMapper: UserMapper,
+        githubUserDao: GithubUserDao
     ): GithubUserRepository {
-        return GithubUserRepositoryImpl(apiService, userMapper)
+        return GithubUserRepositoryImpl(apiService, userMapper, githubUserDao)
     }
 
     @Singleton

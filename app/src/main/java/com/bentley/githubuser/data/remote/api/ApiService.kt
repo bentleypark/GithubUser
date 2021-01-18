@@ -1,6 +1,6 @@
-package com.bentley.githubuser.data.api
+package com.bentley.githubuser.data.remote.api
 
-import com.bentley.githubuser.data.entity.UserEntity
+import com.bentley.githubuser.data.remote.entity.UserEntity
 import retrofit2.http.GET
 import retrofit2.http.Query
 

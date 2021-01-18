@@ -1,6 +1,6 @@
-package com.bentley.githubuser.data.mapper
+package com.bentley.githubuser.data.remote.mapper
 
-import com.bentley.githubuser.data.entity.UserInfoEntity
+import com.bentley.githubuser.data.remote.entity.UserInfoEntity
 import com.bentley.githubuser.domain.User
 import com.bentley.localweather.data.mapper.EntityMapper
 import javax.inject.Inject
