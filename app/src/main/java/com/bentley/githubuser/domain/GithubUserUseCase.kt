@@ -5,6 +5,8 @@ import com.bentley.githubuser.domain.state.DataState
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.flowOf
+import kotlinx.coroutines.flow.zip
 import java.lang.Exception
 import javax.inject.Inject
 
@@ -16,9 +18,17 @@ class GithubUserUseCase @Inject constructor(private val githubUserRepository: Gi
             delay(1000)
 
             try {
-                val result = githubUserRepository.searchUsers(searchKeyword, page)
-                if (result.total != 0) {
-                    emit(DataState.Success(result.users))
+                val searchResult = githubUserRepository.searchUsers(searchKeyword, page)
+                val getResult = githubUserRepository.getUsers().map { it.name }
+
+                searchResult.users.forEach { user ->
+                    if (getResult.contains(user.name)) {
+                        user.isFavorite = true
+                    }
+                }
+
+                if (searchResult.total != 0) {
+                    emit(DataState.Success(searchResult.users))
                 } else {
                     val e = Exception("검색 결과가 없습니다.")
                     emit(DataState.Error(e))

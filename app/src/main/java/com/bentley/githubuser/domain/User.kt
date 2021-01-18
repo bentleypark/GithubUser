@@ -20,7 +20,7 @@ data class User(
     @ColumnInfo(name = "profile")
     val profileUrl: String,
     @Ignore
-    val isFavorite: Boolean
+    var isFavorite: Boolean
 ) {
     constructor(name: String, profileUrl: String) : this(name, profileUrl, false)
 
