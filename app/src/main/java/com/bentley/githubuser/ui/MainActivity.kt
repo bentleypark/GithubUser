@@ -5,7 +5,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
 import com.bentley.githubuser.R
 import com.bentley.githubuser.databinding.ActivityMainBinding
-import com.bentley.githubuser.ui.api.SectionsPagerAdapter
 import com.bentley.githubuser.utils.viewBinding
 import com.google.android.material.tabs.TabLayout
 import dagger.hilt.android.AndroidEntryPoint
@@ -13,7 +12,6 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
     private val binding by viewBinding(ActivityMainBinding::inflate)
-    private lateinit var sectionsPagerAdapter: SectionsPagerAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -23,9 +21,6 @@ class MainActivity : AppCompatActivity() {
 
     private fun setUpViews() {
         binding.apply {
-            sectionsPagerAdapter = SectionsPagerAdapter(this@MainActivity, supportFragmentManager)
-//            viewPager.adapter = sectionsPagerAdapter
-//            tabs.setupWithViewPager(viewPager)
 
             val navController = findNavController(R.id.nav_host_fragment)
             tabs.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {

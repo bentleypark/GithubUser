@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Github User</string>
-    <string name="tab_text_1">Tab 1</string>
-    <string name="tab_text_2">Tab 2</string>
+    <string name="app_name">Github Starts</string>
+    <string name="tab_text_1">API</string>
+    <string name="tab_text_2">Local</string>
 </resources>
