@@ -18,10 +18,10 @@ constructor(private val githubUserUseCase: GithubUserUseCase) : ViewModel() {
 //        "Hello world from section: $it"
 //    }
 
-    val list = mutableListOf(
-        User("테스트"), User("박중길"), User("&^*"),
-        User("test")
-    )
+//    val list = mutableListOf(
+//        User("테스트"), User("박중길"), User("&^*"),
+//        User("test")
+//    )
 
     private val _userList = MutableLiveData<DataState<List<User>>>()
     val userList: LiveData<DataState<List<User>>> get() = _userList
@@ -68,9 +68,19 @@ constructor(private val githubUserUseCase: GithubUserUseCase) : ViewModel() {
         }
     }
 
-    fun insert() {
+    fun insert(item: User) {
         viewModelScope.launch {
-            githubUserUseCase.insert(User("test"))
+            githubUserUseCase.insert(item)
+                .onEach { dataState ->
+                    Timber.d(dataState.toString())
+                }
+                .launchIn(viewModelScope)
+        }
+    }
+
+    fun delete(item: User) {
+        viewModelScope.launch {
+            githubUserUseCase.delete(item)
                 .onEach { dataState ->
                     Timber.d(dataState.toString())
                 }

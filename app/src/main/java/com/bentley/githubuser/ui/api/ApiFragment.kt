@@ -47,7 +47,9 @@ class ApiFragment : Fragment() {
     private fun setUpViews() {
         binding.apply {
 
-            userListAdapter = SearchUserListAdapter(mutableListOf(), viewModel)
+            userListAdapter = SearchUserListAdapter(mutableListOf(), viewModel).also {
+                it.setHasStableIds(true)
+            }
             searchUserList.apply {
                 adapter = userListAdapter
                 setHasFixedSize(true)

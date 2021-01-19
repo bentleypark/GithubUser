@@ -1,6 +1,7 @@
 package com.bentley.githubuser.domain
 
 import com.bentley.githubuser.data.GithubUserRepository
+import com.bentley.githubuser.data.local.GithubUserDao
 import com.bentley.githubuser.domain.state.DataState
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
@@ -10,7 +11,9 @@ import kotlinx.coroutines.flow.zip
 import java.lang.Exception
 import javax.inject.Inject
 
-class GithubUserUseCase @Inject constructor(private val githubUserRepository: GithubUserRepository) {
+class GithubUserUseCase @Inject constructor(
+    private val githubUserRepository: GithubUserRepository
+) {
 
     suspend fun searchUsers(searchKeyword: String, page: Int = 1): Flow<DataState<List<User>>> =
         flow {
@@ -45,6 +48,18 @@ class GithubUserUseCase @Inject constructor(private val githubUserRepository: Gi
 
         try {
             githubUserRepository.insert(user)
+            emit(DataState.Success(true))
+        } catch (e: Exception) {
+            emit(DataState.Error(e))
+        }
+    }
+
+    suspend fun delete(user: User): Flow<DataState<Boolean>> = flow {
+        emit(DataState.Loading)
+        delay(1000)
+
+        try {
+            githubUserRepository.delete(user)
             emit(DataState.Success(true))
         } catch (e: Exception) {
             emit(DataState.Error(e))

@@ -3,8 +3,6 @@ package com.bentley.githubuser.ui.api
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import coil.load
-import coil.transform.CircleCropTransformation
 import com.bentley.githubuser.databinding.ItemApiUserListBinding
 import com.bentley.githubuser.domain.User
 
@@ -21,11 +19,20 @@ class SearchUserListAdapter(
             binding.apply {
                 tvName.text = item.name
                 btnFavorite.isSelected = item.isFavorite
-//                ivProfile.load(item.profileUrl){
-//                    transformations(CircleCropTransformation())
-//                }
                 userItem.setOnClickListener {
-//                    viewModel.insert()
+                    if (!btnFavorite.isSelected) {
+                        viewModel.insert(item)
+                    } else {
+                        viewModel.delete(item)
+                    }
+                    btnFavorite.isSelected = !btnFavorite.isSelected
+                }
+                btnFavorite.setOnClickListener {
+                    if (!btnFavorite.isSelected) {
+                        viewModel.insert(item)
+                    } else {
+                        viewModel.delete(item)
+                    }
                     btnFavorite.isSelected = !btnFavorite.isSelected
                 }
             }
@@ -44,6 +51,8 @@ class SearchUserListAdapter(
     }
 
     override fun getItemCount() = userList.size
+
+    override fun getItemId(position: Int) = userList[position].id.toLong()
 
     fun addAll(newList: List<User>) {
         userList.clear()

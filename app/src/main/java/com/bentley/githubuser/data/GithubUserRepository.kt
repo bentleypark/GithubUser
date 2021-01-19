@@ -9,5 +9,7 @@ interface GithubUserRepository {
 
     suspend fun insert(user: User)
 
+    suspend fun delete(user: User)
+
     suspend fun getUsers(): List<User>
 }

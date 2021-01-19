@@ -23,6 +23,10 @@ class GithubUserRepositoryImpl @Inject constructor(
         return githubUserDao.insert(user)
     }
 
+    override suspend fun delete(user: User) {
+        return githubUserDao.delete(user)
+    }
+
     override suspend fun getUsers(): List<User> {
         return githubUserDao.getUsers()
     }

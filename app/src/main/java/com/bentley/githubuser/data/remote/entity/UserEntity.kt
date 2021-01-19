@@ -11,5 +11,7 @@ data class UserEntity(
 
 data class UserInfoEntity(
     @SerializedName("login")
-    val name: String
+    val name: String,
+    @SerializedName("id")
+    val id: Int,
 )
