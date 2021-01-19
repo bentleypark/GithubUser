@@ -1,18 +1,23 @@
 package com.bentley.githubuser.ui.api
 
 import android.os.Bundle
+import android.text.Editable
+import android.text.SpannableStringBuilder
+import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.EditorInfo
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import com.bentley.githubuser.databinding.FragmentApiBinding
 import com.bentley.githubuser.domain.User
 import com.bentley.githubuser.domain.state.DataState
-import com.bentley.githubuser.utils.makeGone
-import com.bentley.githubuser.utils.makeVisible
-import com.bentley.githubuser.utils.viewLifecycle
+import com.bentley.githubuser.utils.*
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class ApiFragment : Fragment() {
@@ -20,6 +25,7 @@ class ApiFragment : Fragment() {
     private val viewModel: ApiFragmentViewModel by viewModels()
     private var binding: FragmentApiBinding by viewLifecycle()
     private lateinit var userListAdapter: SearchUserListAdapter
+    private var searchJob: Job? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -31,9 +37,6 @@ class ApiFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        viewModel.insert()
-        viewModel.searchUsers()
         setUpViews()
         setUpObserve()
     }
@@ -46,6 +49,51 @@ class ApiFragment : Fragment() {
                 adapter = userListAdapter
                 setHasFixedSize(true)
             }
+
+            searchLayout.apply {
+                etSearch.apply {
+                    showKeyboard()
+                    requestFocus()
+
+                    setOnEditorActionListener { _, actionId, _ ->
+                        if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+                            performSearch()
+                        }
+                        true
+
+                    }
+
+                    addTextChangedListener(object : TextWatcher {
+                        override fun beforeTextChanged(
+                            s: CharSequence?,
+                            start: Int,
+                            count: Int,
+                            after: Int
+                        ) {
+                        }
+
+                        override fun onTextChanged(
+                            s: CharSequence?,
+                            start: Int,
+                            before: Int,
+                            count: Int
+                        ) {
+                            binding.apply {
+                                searchUserList.makeGone()
+                                progressCircular.makeVisible()
+                            }
+                        }
+
+                        override fun afterTextChanged(s: Editable?) {
+                        }
+
+                    })
+                }
+
+                btnSearch.setOnClickListener {
+                    performSearch()
+                }
+            }
         }
     }
 
@@ -55,19 +103,42 @@ class ApiFragment : Fragment() {
 
                 when (result) {
                     is DataState.Success<List<User>> -> {
-                        binding.progressCircular.makeGone()
+                        binding.apply {
+                            searchUserList.makeVisible()
+                            progressCircular.makeGone()
+                        }
                         if (result.data.isNotEmpty()) {
                             userListAdapter.addAll(result.data)
                         }
                     }
                     is DataState.Loading -> {
-                        binding.progressCircular.makeVisible()
+                        binding.apply {
+                            searchUserList.makeGone()
+                            progressCircular.makeVisible()
+                        }
                     }
                     else -> {
 
                     }
                 }
             })
+        }
+    }
+
+    private fun performSearch() {
+        binding.apply {
+            val query = SpannableStringBuilder(searchLayout.etSearch.text).toString().trim()
+            if (query.isNotEmpty()) {
+                searchJob?.cancel()
+                searchJob = lifecycleScope.launch {
+
+                    searchLayout.etSearch.apply {
+                        clearFocus()
+                        hideKeyboard()
+                    }
+                    viewModel.searchUsers(query)
+                }
+            }
         }
     }
 }

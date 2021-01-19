@@ -8,7 +8,7 @@
     tools:context=".ui.api.ApiFragment">
 
     <include
-        android:id="@+id/search_view"
+        android:id="@+id/search_layout"
         layout="@layout/search_view"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -26,7 +26,7 @@
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/search_view"
+        app:layout_constraintTop_toBottomOf="@+id/search_layout"
         tools:listitem="@layout/item_api_user_list" />
 
     <androidx.core.widget.ContentLoadingProgressBar
@@ -34,6 +34,7 @@
         style="?android:progressBarStyleLarge"
         android:layout_width="@dimen/fragment_remote_progressbar_size"
         android:layout_height="@dimen/fragment_remote_progressbar_size"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

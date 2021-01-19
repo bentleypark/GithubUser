@@ -25,9 +25,9 @@ constructor(private val githubUserUseCase: GithubUserUseCase) : ViewModel() {
     private val _userList = MutableLiveData<DataState<List<User>>>()
     val userList: LiveData<DataState<List<User>>> get() = _userList
 
-    fun searchUsers() {
+    fun searchUsers(query: String) {
         viewModelScope.launch {
-            githubUserUseCase.searchUsers("test")
+            githubUserUseCase.searchUsers(query)
                 .onEach { dataState ->
                     Timber.d(dataState.toString())
                     _userList.value = dataState
