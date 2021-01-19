@@ -5,6 +5,7 @@ import androidx.lifecycle.*
 import com.bentley.githubuser.domain.GithubUserUseCase
 import com.bentley.githubuser.domain.User
 import com.bentley.githubuser.domain.state.DataState
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
@@ -25,9 +26,17 @@ constructor(private val githubUserUseCase: GithubUserUseCase) : ViewModel() {
     private val _userList = MutableLiveData<DataState<List<User>>>()
     val userList: LiveData<DataState<List<User>>> get() = _userList
 
+    private val _nextUserList = MutableLiveData<DataState<List<User>>>()
+    val nextUserList: LiveData<DataState<List<User>>> get() = _nextUserList
+
+    private var currentPage = 1
+    private var currentQuery = ""
+
     fun searchUsers(query: String) {
         viewModelScope.launch {
-            githubUserUseCase.searchUsers(query)
+            checkNewQuery(query)
+            delay(1000)
+            githubUserUseCase.searchUsers(query, currentPage)
                 .onEach { dataState ->
                     Timber.d(dataState.toString())
                     _userList.value = dataState
@@ -35,6 +44,28 @@ constructor(private val githubUserUseCase: GithubUserUseCase) : ViewModel() {
                 .launchIn(viewModelScope)
         }
 
+    }
+
+    private fun checkNewQuery(newQuery: String) {
+        if (currentQuery.isEmpty()) {
+            currentQuery = newQuery
+        }
+
+        if (currentQuery != newQuery) {
+            currentQuery = newQuery
+            currentPage = 1
+        }
+    }
+
+    fun fetchNextPage() {
+        viewModelScope.launch {
+            currentPage += 1
+            githubUserUseCase.searchUsers(currentQuery, currentPage)
+                .onEach { dataState ->
+                    _nextUserList.value = dataState
+                }
+                .launchIn(viewModelScope)
+        }
     }
 
     fun insert() {

@@ -50,4 +50,9 @@ class SearchUserListAdapter(
         userList.addAll(newList)
         notifyDataSetChanged()
     }
+
+    fun add(newList: List<User>) {
+        userList.addAll(newList)
+        notifyDataSetChanged()
+    }
 }

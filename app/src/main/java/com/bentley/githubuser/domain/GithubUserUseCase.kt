@@ -35,7 +35,7 @@ class GithubUserUseCase @Inject constructor(private val githubUserRepository: Gi
                 }
 
             } catch (e: Exception) {
-                emit(DataState.Error(e))
+                emit(DataState.Error(Exception("오류가 발생했습니다. 잠시 후에 다시 한번 시도해주세요. $e")))
             }
         }
 

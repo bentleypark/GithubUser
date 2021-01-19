@@ -4,10 +4,12 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.inputmethod.InputMethodManager
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.*
 import androidx.viewbinding.ViewBinding
+import com.google.android.material.snackbar.Snackbar
 import kotlin.properties.ReadWriteProperty
 import kotlin.reflect.KProperty
 
@@ -66,4 +68,13 @@ fun View.hideKeyboard() {
 fun View.showKeyboard() {
     val imm = context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
     imm.showSoftInput(this, 0)
+}
+
+fun View.makeSnackBar(text: String) {
+    Snackbar.make(this, text, Snackbar.LENGTH_SHORT).show()
+}
+
+fun Fragment.makeToast(text: String) {
+    val toast = Toast.makeText(activity, text, Toast.LENGTH_SHORT)
+    toast.show()
 }

@@ -11,6 +11,7 @@ import android.view.inputmethod.EditorInfo
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.bentley.githubuser.databinding.FragmentApiBinding
 import com.bentley.githubuser.domain.User
 import com.bentley.githubuser.domain.state.DataState
@@ -26,6 +27,8 @@ class ApiFragment : Fragment() {
     private var binding: FragmentApiBinding by viewLifecycle()
     private lateinit var userListAdapter: SearchUserListAdapter
     private var searchJob: Job? = null
+    private var isLastPage = false
+    private var isLoading = false
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -48,6 +51,22 @@ class ApiFragment : Fragment() {
             searchUserList.apply {
                 adapter = userListAdapter
                 setHasFixedSize(true)
+
+                addOnScrollListener(object :
+                    PaginationScrollListener(this.layoutManager as LinearLayoutManager) {
+                    override fun isLastPage(): Boolean {
+                        return isLastPage
+                    }
+
+                    override fun isLoading(): Boolean {
+                        return isLoading
+                    }
+
+                    override fun loadMoreItems() {
+                        isLoading = true
+                        viewModel.fetchNextPage()
+                    }
+                })
             }
 
             searchLayout.apply {
@@ -78,10 +97,8 @@ class ApiFragment : Fragment() {
                             before: Int,
                             count: Int
                         ) {
-                            binding.apply {
-                                searchUserList.makeGone()
-                                progressCircular.makeVisible()
-                            }
+                            searchUserList.makeGone()
+                            progressCircular.makeVisible()
                         }
 
                         override fun afterTextChanged(s: Editable?) {
@@ -118,7 +135,26 @@ class ApiFragment : Fragment() {
                         }
                     }
                     else -> {
+                        binding.progressCircular.makeGone()
+                        makeToast(result.toString())
+                    }
+                }
+            })
 
+            nextUserList.observe(viewLifecycleOwner, { result ->
+                when (result) {
+                    is DataState.Success<List<User>> -> {
+                        binding.progressCircular.makeGone()
+
+                        if (result.data.isNotEmpty()) {
+                            userListAdapter.add(result.data)
+                            isLoading = false
+                        } else {
+                            isLastPage = true
+                        }
+                    }
+                    else -> {
+                        binding.progressCircular.makeVisible()
                     }
                 }
             })
@@ -138,6 +174,8 @@ class ApiFragment : Fragment() {
                     }
                     viewModel.searchUsers(query)
                 }
+            } else {
+                searchUserList.makeSnackBar("검색어를 입력해주세요!")
             }
         }
     }
