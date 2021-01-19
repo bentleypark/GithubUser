@@ -17,12 +17,10 @@ data class User(
     @PrimaryKey(autoGenerate = false)
     @ColumnInfo(name = "name")
     val name: String,
-    @ColumnInfo(name = "profile")
-    val profileUrl: String,
     @Ignore
     var isFavorite: Boolean
 ) {
-    constructor(name: String, profileUrl: String) : this(name, profileUrl, false)
+    constructor(name: String) : this(name, false)
 
     companion object {
         const val TABLE_NAME = "favoriteUsers"

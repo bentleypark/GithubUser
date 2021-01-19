@@ -9,7 +9,7 @@ class UserMapper @Inject constructor() : EntityMapper<List<UserInfoEntity>, List
     override fun mapFromEntity(entity: List<UserInfoEntity>): List<User> {
         return entity.map {
             with(it) {
-                User(name, profileUrl)
+                User(name)
             }
         }
     }

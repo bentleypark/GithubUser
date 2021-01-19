@@ -11,7 +11,5 @@ data class UserEntity(
 
 data class UserInfoEntity(
     @SerializedName("login")
-    val name: String,
-    @SerializedName("avatar_url")
-    val profileUrl: String,
+    val name: String
 )

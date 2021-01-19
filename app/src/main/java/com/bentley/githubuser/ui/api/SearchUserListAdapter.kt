@@ -3,6 +3,8 @@ package com.bentley.githubuser.ui.api
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import coil.load
+import coil.transform.CircleCropTransformation
 import com.bentley.githubuser.databinding.ItemApiUserListBinding
 import com.bentley.githubuser.domain.User
 
@@ -19,8 +21,12 @@ class SearchUserListAdapter(
             binding.apply {
                 tvName.text = item.name
                 btnFavorite.isSelected = item.isFavorite
+//                ivProfile.load(item.profileUrl){
+//                    transformations(CircleCropTransformation())
+//                }
                 userItem.setOnClickListener {
 //                    viewModel.insert()
+                    btnFavorite.isSelected = !btnFavorite.isSelected
                 }
             }
         }
