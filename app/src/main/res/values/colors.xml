@@ -9,4 +9,6 @@
     <color name="white">#FFFFFFFF</color>
     <color name="colorAccent">#4285f4</color>
     <color name="sky_blue">#64abff</color>
+    <color name="border_color">#1e000000</color>
+    <color name="gray">#a0a0a0</color>
 </resources>
