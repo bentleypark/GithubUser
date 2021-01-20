@@ -13,9 +13,9 @@ class GithubUserRepositoryImpl @Inject constructor(
     private val githubUserDao: GithubUserDao
 ) :
     GithubUserRepository {
-    override suspend fun searchUsers(searchKeyword: String, page: Int): SearchResult {
+    override suspend fun searchUsers(query: String, page: Int): SearchResult {
 
-        val result = apiService.searchUsers(searchKeyword, page, PER_PAGE)
+        val result = apiService.searchUsers(query, page, PER_PAGE)
         return SearchResult(result.total, userMapper.mapFromEntity(result.items))
     }
 
@@ -29,6 +29,10 @@ class GithubUserRepositoryImpl @Inject constructor(
 
     override suspend fun getUsers(): List<User> {
         return githubUserDao.getUsers()
+    }
+
+    override suspend fun search(query: String): List<User> {
+        return githubUserDao.searchUsers(query)
     }
 
     companion object {

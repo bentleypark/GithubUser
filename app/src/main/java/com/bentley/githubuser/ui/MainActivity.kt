@@ -2,7 +2,9 @@ package com.bentley.githubuser.ui
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.navigation.NavOptions
 import androidx.navigation.findNavController
+import androidx.navigation.navOptions
 import com.bentley.githubuser.R
 import com.bentley.githubuser.databinding.ActivityMainBinding
 import com.bentley.githubuser.utils.viewBinding
@@ -27,10 +29,20 @@ class MainActivity : AppCompatActivity() {
                 override fun onTabSelected(tab: TabLayout.Tab) {
                     when (tab.position) {
                         0 -> {
-                            navController.navigate(R.id.apiFragment)
+                            navController.navigate(R.id.apiFragment, null,
+                                // fragment backStack 관리를 위해서 navOptions 추가
+                                navOptions {
+                                    popUpTo = R.id.apiFragment
+                                    launchSingleTop = true
+                                }
+                            )
                         }
                         1 -> {
-                            navController.navigate(R.id.localFragment)
+                            navController.navigate(R.id.localFragment, null,
+                                navOptions {
+                                    popUpTo = R.id.localFragment
+                                    launchSingleTop = true
+                                })
                         }
                     }
                 }

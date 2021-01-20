@@ -14,15 +14,6 @@ import timber.log.Timber
 class ApiFragmentViewModel @ViewModelInject
 constructor(private val githubUserUseCase: GithubUserUseCase) : ViewModel() {
 
-//    val text: LiveData<String> = Transformations.map(_index) {
-//        "Hello world from section: $it"
-//    }
-
-//    val list = mutableListOf(
-//        User("테스트"), User("박중길"), User("&^*"),
-//        User("test")
-//    )
-
     private val _userList = MutableLiveData<DataState<List<User>>>()
     val userList: LiveData<DataState<List<User>>> get() = _userList
 

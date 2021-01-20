@@ -6,7 +6,8 @@ import com.bentley.githubuser.domain.User
 
 @Database(
     entities = [User::class],
-    version = 1
+    version = 1,
+    exportSchema = false
 )
 abstract class GithubUserDatabase : RoomDatabase() {
     abstract fun githubUserDao(): GithubUserDao

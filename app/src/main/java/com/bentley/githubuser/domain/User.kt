@@ -1,18 +1,13 @@
 package com.bentley.githubuser.domain
 
-import androidx.room.ColumnInfo
-import androidx.room.Entity
-import androidx.room.Ignore
-import androidx.room.PrimaryKey
-import com.bentley.githubuser.domain.User.Companion.TABLE_NAME
-
+import androidx.room.*
 
 data class SearchResult(
     val total: Int,
     val users: List<User>
 )
 
-@Entity(tableName = TABLE_NAME)
+@Entity(tableName = "favoriteUsers")
 data class User(
     @PrimaryKey(autoGenerate = false)
     @ColumnInfo(name = "id")
@@ -23,8 +18,7 @@ data class User(
     var isFavorite: Boolean
 ) {
     constructor(id: Int, name: String) : this(id, name, false)
-
-    companion object {
-        const val TABLE_NAME = "favoriteUsers"
-    }
 }
+
+
+

@@ -18,6 +18,7 @@ import com.bentley.githubuser.domain.state.DataState
 import com.bentley.githubuser.utils.*
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
@@ -72,16 +73,17 @@ class ApiFragment : Fragment() {
             }
 
             searchLayout.apply {
-                etSearch.apply {
-                    showKeyboard()
-                    requestFocus()
 
+                btnSearch.setOnClickListener {
+                    performSearch()
+                }
+
+                etSearch.apply {
                     setOnEditorActionListener { _, actionId, _ ->
                         if (actionId == EditorInfo.IME_ACTION_SEARCH) {
                             performSearch()
                         }
                         true
-
                     }
 
                     addTextChangedListener(object : TextWatcher {
@@ -101,11 +103,11 @@ class ApiFragment : Fragment() {
                         ) {
                             searchUserList.makeGone()
                             progressCircular.makeVisible()
+                            userListAdapter.addAll(mutableListOf())
                         }
 
                         override fun afterTextChanged(s: Editable?) {
                         }
-
                     })
                 }
 
@@ -119,12 +121,11 @@ class ApiFragment : Fragment() {
     private fun setUpObserve() {
         viewModel.apply {
             userList.observe(viewLifecycleOwner, { result ->
-
                 when (result) {
                     is DataState.Success<List<User>> -> {
                         binding.apply {
-                            searchUserList.makeVisible()
                             progressCircular.makeGone()
+                            binding.searchUserList.makeVisible()
                         }
                         if (result.data.isNotEmpty()) {
                             userListAdapter.addAll(result.data)

@@ -12,6 +12,9 @@ interface GithubUserDao {
     @Delete
     suspend fun delete(user: User)
 
-    @Query("SELECT * FROM favoriteUsers ORDER BY name DESC")
+    @Query("SELECT * FROM favoriteUsers")
     suspend fun getUsers(): List<User>
+
+    @Query("SELECT * FROM favoriteUsers WHERE name LIKE '%' || :query || '%'")
+    suspend fun searchUsers(query: String): List<User>
 }
