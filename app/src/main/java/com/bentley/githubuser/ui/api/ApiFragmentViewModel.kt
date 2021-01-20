@@ -29,7 +29,6 @@ constructor(private val githubUserUseCase: GithubUserUseCase) : ViewModel() {
             delay(1000)
             githubUserUseCase.searchUsers(query, currentPage)
                 .onEach { dataState ->
-                    Timber.d(dataState.toString())
                     _userList.value = dataState
                 }
                 .launchIn(viewModelScope)
@@ -44,7 +43,7 @@ constructor(private val githubUserUseCase: GithubUserUseCase) : ViewModel() {
 
         if (currentQuery != newQuery) {
             currentQuery = newQuery
-            currentPage = 1
+            currentPage = FIRST_PAGE
         }
     }
 
@@ -77,5 +76,9 @@ constructor(private val githubUserUseCase: GithubUserUseCase) : ViewModel() {
                 }
                 .launchIn(viewModelScope)
         }
+    }
+
+    companion object {
+        private const val FIRST_PAGE = 1
     }
 }

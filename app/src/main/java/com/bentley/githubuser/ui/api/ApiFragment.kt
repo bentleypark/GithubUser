@@ -12,14 +12,15 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.bentley.githubuser.R
 import com.bentley.githubuser.databinding.FragmentApiBinding
 import com.bentley.githubuser.domain.User
 import com.bentley.githubuser.domain.state.DataState
 import com.bentley.githubuser.utils.*
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Job
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import timber.log.Timber
 
 @AndroidEntryPoint
 class ApiFragment : Fragment() {
@@ -43,6 +44,10 @@ class ApiFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         setUpViews()
         setUpObserve()
+
+        val str1 = "f"
+        val str2 = "박"
+        Timber.d("${OrderingByKoreanEnglishNumbuerSpecial.compare(str2, str1)}")
     }
 
     private fun setUpViews() {
@@ -178,7 +183,7 @@ class ApiFragment : Fragment() {
                     viewModel.searchUsers(query)
                 }
             } else {
-                searchUserList.makeSnackBar("검색어를 입력해주세요!")
+                searchUserList.makeSnackBar(getString(R.string.no_search_query))
             }
         }
     }

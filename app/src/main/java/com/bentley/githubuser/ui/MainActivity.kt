@@ -2,7 +2,6 @@ package com.bentley.githubuser.ui
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import androidx.navigation.NavOptions
 import androidx.navigation.findNavController
 import androidx.navigation.navOptions
 import com.bentley.githubuser.R
@@ -23,12 +22,11 @@ class MainActivity : AppCompatActivity() {
 
     private fun setUpViews() {
         binding.apply {
-
             val navController = findNavController(R.id.nav_host_fragment)
             tabs.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
                 override fun onTabSelected(tab: TabLayout.Tab) {
                     when (tab.position) {
-                        0 -> {
+                        FRAGMENT_API_INDEX -> {
                             navController.navigate(R.id.apiFragment, null,
                                 // fragment backStack 관리를 위해서 navOptions 추가
                                 navOptions {
@@ -37,7 +35,7 @@ class MainActivity : AppCompatActivity() {
                                 }
                             )
                         }
-                        1 -> {
+                        FRAGMENT_LOCAL_INDEX -> {
                             navController.navigate(R.id.localFragment, null,
                                 navOptions {
                                     popUpTo = R.id.localFragment
@@ -54,5 +52,10 @@ class MainActivity : AppCompatActivity() {
                 }
             })
         }
+    }
+
+    companion object {
+        private const val FRAGMENT_API_INDEX = 0
+        private const val FRAGMENT_LOCAL_INDEX = 1
     }
 }

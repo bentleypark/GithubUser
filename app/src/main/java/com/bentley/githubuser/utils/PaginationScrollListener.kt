@@ -33,7 +33,7 @@ abstract class PaginationScrollListener(private var layoutManager: LinearLayoutM
         if (!isLoading() && !isLastPage() && isScrollUp) {
             if (visibleItemCount + firstVisibleItemPosition >= totalItemCount && firstVisibleItemPosition >= 0) {
                 loadMoreItems()
-            } // && totalItemCount >= ClothesFragment.itemsCount
+            }
         }
     }
 

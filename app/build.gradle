@@ -41,9 +41,6 @@ android {
         abortOnError false
         disable 'UnsafeExperimentalUsageError', 'UnsafeExperimentalUsageWarning', 'ContentDescription'
     }
-    configurations {
-        ktlint
-    }
 }
 
 dependencies {

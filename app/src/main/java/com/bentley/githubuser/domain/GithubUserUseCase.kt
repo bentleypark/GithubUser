@@ -63,18 +63,6 @@ class GithubUserUseCase @Inject constructor(
         }
     }
 
-    suspend fun getUsers(): Flow<DataState<List<User>>> = flow {
-        emit(DataState.Loading)
-        delay(1000)
-
-        try {
-            val result = githubUserRepository.getUsers()
-            emit(DataState.Success(result))
-        } catch (e: Exception) {
-            emit(DataState.Error(e))
-        }
-    }
-
     suspend fun search(query: String): Flow<DataState<List<User>>> = flow {
         emit(DataState.Loading)
         delay(1000)

@@ -65,11 +65,6 @@ fun View.hideKeyboard() {
     imm.hideSoftInputFromWindow(windowToken, 0)
 }
 
-fun View.showKeyboard() {
-    val imm = context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-    imm.showSoftInput(this, 0)
-}
-
 fun View.makeSnackBar(text: String) {
     Snackbar.make(this, text, Snackbar.LENGTH_SHORT).show()
 }

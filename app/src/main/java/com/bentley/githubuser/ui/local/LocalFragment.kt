@@ -11,6 +11,7 @@ import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import com.bentley.githubuser.R
 import com.bentley.githubuser.databinding.FragmentLocalBinding
 import com.bentley.githubuser.domain.User
 import com.bentley.githubuser.domain.state.DataState
@@ -101,11 +102,9 @@ class LocalFragment : Fragment() {
 
                         if (result.data.isNotEmpty()) {
                             binding.favoriteUserList.makeVisible()
-                            Timber.d(result.data.toString())
-                            Timber.d(sortList(result.data).toString())
-                            favoriteUserListAdapter.addAll(result.data)
+                            favoriteUserListAdapter.addAll(sortList(result.data))
                         } else {
-                            makeToast("검색 결과가 없습니다.")
+                            makeToast(getString(R.string.no_search_result))
                         }
                     }
                     is DataState.Loading -> {
@@ -150,7 +149,7 @@ class LocalFragment : Fragment() {
                     viewModel.search(query)
                 }
             } else {
-                favoriteUserList.makeSnackBar("검색어를 입력해주세요!")
+                favoriteUserList.makeSnackBar(getString(R.string.no_search_query))
             }
         }
     }

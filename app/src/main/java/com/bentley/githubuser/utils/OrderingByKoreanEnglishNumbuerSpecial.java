@@ -2,6 +2,8 @@ package com.bentley.githubuser.utils;
 
 import java.util.Comparator;
 
+import timber.log.Timber;
+
 import static com.bentley.githubuser.utils.CharUtil.isEnglish;
 import static com.bentley.githubuser.utils.CharUtil.isKorean;
 import static com.bentley.githubuser.utils.CharUtil.isNumber;
@@ -18,10 +20,6 @@ public class OrderingByKoreanEnglishNumbuerSpecial {
 
     /**
      * 한글 > 영어 > 숫자 > 특수문자 순서 비교 함수
-     *
-     * @param left
-     * @param right
-     * @return
      */
     public static int compare(String left, String right) {
 
@@ -41,6 +39,7 @@ public class OrderingByKoreanEnglishNumbuerSpecial {
                         || isKoreanAndNumber(leftChar, rightChar)
                         || isEnglishAndNumber(leftChar, rightChar)
                         || isKoreanAndSpecial(leftChar, rightChar)) {
+                    Timber.d("1");
                     return (leftChar - rightChar) * REVERSE;
                 } else if (isEnglishAndSpecial(leftChar, rightChar)
                         || isNumberAndSpecial(leftChar, rightChar)) {
@@ -50,6 +49,7 @@ public class OrderingByKoreanEnglishNumbuerSpecial {
                         return RIGHT_FIRST;
                     }
                 } else {
+                    Timber.d("2");
                     return leftChar - rightChar;
                 }
             }

@@ -8,7 +8,6 @@ import androidx.lifecycle.viewModelScope
 import com.bentley.githubuser.domain.GithubUserUseCase
 import com.bentley.githubuser.domain.User
 import com.bentley.githubuser.domain.state.DataState
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
@@ -34,7 +33,6 @@ constructor(private val githubUserUseCase: GithubUserUseCase) : ViewModel() {
         viewModelScope.launch {
             githubUserUseCase.search(query)
                 .onEach { dataState ->
-                    Timber.d(dataState.toString())
                     _dataState.postValue(dataState)
                 }
                 .launchIn(viewModelScope)
