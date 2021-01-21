@@ -17,8 +17,8 @@ class AuthInterceptor @Inject constructor(private val networkCheck: NetworkCheck
         val requestBuilder = chain.request().newBuilder()
         requestBuilder.header("UserBody-Agent", "android")
         requestBuilder.addHeader("Content-Type", "application/json")
+        requestBuilder.header("accept","application/vnd.github.v3+json")
 
-        Timber.d("Network Status: ${networkCheck.isConnected()}")
         if (networkCheck.isConnected()) {
             requestBuilder.header("Cache-Control", "public, max-age=" + 60).build()
         } else {
