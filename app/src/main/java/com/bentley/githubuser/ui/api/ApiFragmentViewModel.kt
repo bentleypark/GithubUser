@@ -14,9 +14,10 @@ import timber.log.Timber
 class ApiFragmentViewModel @ViewModelInject
 constructor(private val githubUserUseCase: GithubUserUseCase) : ViewModel() {
 
+    // 최초 검색 결과 리스트  정보
     private val _userList = MutableLiveData<DataState<List<User>>>()
     val userList: LiveData<DataState<List<User>>> get() = _userList
-
+    // 추가 페이지 리스트 정보
     private val _nextUserList = MutableLiveData<DataState<List<User>>>()
     val nextUserList: LiveData<DataState<List<User>>> get() = _nextUserList
 

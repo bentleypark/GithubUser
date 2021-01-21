@@ -19,6 +19,11 @@ class FavoriteUserListAdapter(
         fun bind(item: User) {
             binding.apply {
                 tvName.text = item.name
+                /**
+                 *  사용자 이름의 추성 가져오는 방법
+                 *  1) 한국어 일 경우: CharUtil.getInitialSound 함수를 호출하여 초성값 획득
+                 *  2) 나머지: 문자열의 첫번째 문자값으로 반환
+                 */
                 tvFirstChar.text = if (CharUtil.isKorean(item.name[0])) {
                     CharUtil.getInitialSound(item.name)
                 } else {

@@ -12,6 +12,10 @@ class GithubUserUseCase @Inject constructor(
     private val githubUserRepository: GithubUserRepository
 ) {
 
+    /**
+     * 사용자 검색 Api 호출 함수
+     * 사용자 검색 Api 호출 후 결과에서 즐겨찾기에 추가된 사용자만 상태값을 변경
+     */
     suspend fun searchUsers(searchKeyword: String, page: Int = 1): Flow<DataState<List<User>>> =
         flow {
             emit(DataState.Loading)
