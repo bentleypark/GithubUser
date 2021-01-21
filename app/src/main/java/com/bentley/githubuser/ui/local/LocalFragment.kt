@@ -15,6 +15,7 @@ import com.bentley.githubuser.R
 import com.bentley.githubuser.databinding.FragmentLocalBinding
 import com.bentley.githubuser.domain.User
 import com.bentley.githubuser.domain.state.DataState
+import com.bentley.githubuser.ui.BaseFragment
 import com.bentley.githubuser.utils.*
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Job
@@ -22,12 +23,10 @@ import kotlinx.coroutines.launch
 import timber.log.Timber
 
 @AndroidEntryPoint
-class LocalFragment : Fragment() {
+class LocalFragment : BaseFragment<FragmentLocalBinding>() {
 
     private val viewModel: LocalViewModel by viewModels()
-    private var binding: FragmentLocalBinding by viewLifecycle()
     private lateinit var favoriteUserListAdapter: FavoriteUserListAdapter
-    private var searchJob: Job? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
