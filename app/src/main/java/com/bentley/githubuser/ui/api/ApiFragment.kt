@@ -21,7 +21,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class ApiFragment : BaseFragment<FragmentApiBinding, ApiFragmentViewModel>() {
+class ApiFragment : BaseFragment<FragmentApiBinding>() {
 
     private val viewModel: ApiFragmentViewModel by viewModels()
     private lateinit var userListAdapter: SearchUserListAdapter
