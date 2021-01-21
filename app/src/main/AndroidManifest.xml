@@ -16,6 +16,7 @@
         android:theme="@style/Theme.GithubUser">
         <activity
             android:name=".ui.MainActivity"
+            android:configChanges="screenSize|smallestScreenSize|screenLayout|orientation|keyboardHidden"
             android:label="@string/app_name"
             android:theme="@style/Theme.GithubUser.NoActionBar">
             <intent-filter>

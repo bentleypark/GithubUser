@@ -20,7 +20,6 @@ import com.bentley.githubuser.utils.*
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
-import timber.log.Timber
 
 @AndroidEntryPoint
 class ApiFragment : Fragment() {
@@ -44,10 +43,6 @@ class ApiFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         setUpViews()
         setUpObserve()
-
-        val str1 = "f"
-        val str2 = "박"
-        Timber.d("${OrderingByKoreanEnglishNumbuerSpecial.compare(str2, str1)}")
     }
 
     private fun setUpViews() {
